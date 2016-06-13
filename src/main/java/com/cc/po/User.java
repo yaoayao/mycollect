@@ -1,5 +1,6 @@
 package com.cc.po;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,27 +8,25 @@ import java.util.Map;
 /**
  * Created by chengwanchao on 2016/6/3.
  */
-public class User implements Cloneable{
+public class User implements Cloneable,Serializable{
 
-    @Override
+    /*@Override
     public Object clone() throws CloneNotSupportedException {
         User clone = (User)super.clone();
         return clone;
-    }
+    }*/
 
     private Integer userId;
     private String userName;
+    private static int age;
 
-    public Person getPerson() {
-        return person;
+    public static int getAge() {
+        return age;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public static void setAge(int age) {
+        User.age = age;
     }
-
-    private Person person;
-
     /*private Map<String, List<String>> stringList;
 
     public Map<String, List<String>> getStringList() {

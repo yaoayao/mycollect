@@ -1,23 +1,16 @@
 package com.cc;
 
-import com.alibaba.fastjson.JSON;
-import com.cc.po.Person;
 import com.cc.po.User;
-import com.cc.util.JacksonJsonUtil;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.cc.util.SerializeUtil;
+import com.cc.util.UnicodeUtil;
 
-import java.security.acl.Group;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by chengwanchao on 2016/6/3.
  */
 public class Main {
-    public static void main(String[] args) throws InterruptedException, CloneNotSupportedException {
+    public static void main(String[] args) throws Exception {
 
         //Dozer对象拷贝实例
         /*User user = new User();
@@ -110,7 +103,7 @@ public class Main {
         String s = "[{\"stringList\":{\"qqq\":\"1111\",\"www\":\"222\"},\"userId\":11,\"userName\":\"aaa\"},{\"$ref\":\"$[2]\"},{\"$ref\":\"$[2]\"}]";
         List user1 = (List) JacksonJsonUtil.json2Object(s, List.class);*/
 
-        Person p = new Person();
+        /*Person p = new Person();
         p.setName("pppp");
         User u = new User();
         u.setUserName("uuuu");
@@ -121,11 +114,12 @@ public class Main {
         p1.setName("------");
         p.getUser().setUserName("2222");
         System.out.println(p.getName());
-        System.out.println(p1.getName());
+        System.out.println(p1.getName());*/
+        AtomicInteger ai = new AtomicInteger();
+        System.out.println(ai);
+        System.out.println(ai.getAndIncrement());
+        System.out.println(ai);
 
-
-
-        Gson g = new Gson();
 //        System.out.println(JacksonJsonUtil.object2Json(p));
 
 
