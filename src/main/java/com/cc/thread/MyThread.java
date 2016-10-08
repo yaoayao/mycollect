@@ -1,6 +1,8 @@
 package com.cc.thread;
 
 
+import java.util.concurrent.CountDownLatch;
+
 /**
  * Created by chengwanchao on 2016/9/26.
  */
@@ -22,7 +24,7 @@ public class MyThread {
 //    }
 
 
-//    public static void main(String[] args) {
+    //    public static void main(String[] args) {
 //        final BlockingQueue<String> queue = new LinkedBlockingQueue<String>();
 //        Thread consumer = new Thread("consumer"){
 //            @Override
@@ -58,8 +60,27 @@ public class MyThread {
 //        consumer.start();
 //
 //    }
-
+    static CountDownLatch countDownLatch = new CountDownLatch(1);
+    static int i = 0;
     public static void main(String[] args) {
+        final Counter counter = new Counter();
+        for (int i = 0; i < 1000; i++) {
+            Thread thread = new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        countDownLatch.await();
+                        System.out.println("----run-----");
 
+                        System.out.println(counter.getCount());;
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            thread.start();
+        }
+        countDownLatch.countDown();
+        System.out.println("---start---");
     }
 }
