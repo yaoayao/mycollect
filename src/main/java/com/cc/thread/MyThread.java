@@ -63,23 +63,23 @@ public class MyThread {
     static CountDownLatch countDownLatch = new CountDownLatch(1);
     static int i = 0;
     public static void main(String[] args) {
-        final Counter counter = new Counter();
-        for (int i = 0; i < 1000; i++) {
-            Thread thread = new Thread(){
-                @Override
-                public void run() {
-                    try {
-                        countDownLatch.await();
-                        System.out.println("----run-----");
-
-                        System.out.println(counter.getCount());;
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            thread.start();
-        }
+//        final Counter counter = new Counter();
+//        for (int i = 0; i < 1000; i++) {
+//            Thread thread = new Thread(){
+//                @Override
+//                public void run() {
+//                    try {
+//                        countDownLatch.await();
+//                        System.out.println("----run-----");
+//
+//                        System.out.println(counter.getCount());;
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            };
+//            thread.start();
+//        }
         countDownLatch.countDown();
         System.out.println("---start---");
     }
