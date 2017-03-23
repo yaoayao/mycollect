@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Ïß³Ì³Ø
  * @author yfguopeng
  *
  */

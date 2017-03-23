@@ -8,17 +8,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * ÈÕÆÚ×ª»»¹¤¾ßÀà
- * @author ³ÌÊ¤Èå
+ * æ—¥æœŸè½¬æ¢å·¥å…·ç±»
+ * @author ç¨‹èƒœå„’
  *
  */
 public class DateUtil {
-	
+
 	private static final Log log = LogFactory.getLog(DateUtil.class);
 	/**
-	 * 
-	 * @param date:ÈÕÆÚ
-	 * @param formatString:¸ñÊ½
+	 *
+	 * @param date:æ—¥æœŸ
+	 * @param formatString:æ ¼å¼
 	 * @return
 	 */
 	public static String convertDateToString(Date date,String formatString){
@@ -26,7 +26,7 @@ public class DateUtil {
 		return format.format(date);
 	}
 	/**
-	 * 
+	 *
 	 * @param dateString
 	 * @param formatString
 	 * @return
@@ -39,13 +39,13 @@ public class DateUtil {
 			try {
 				date = format.parse(dateString);
 			} catch (ParseException e) {
-				log.error("--------Ê±¼ä¸ñÊ½×ª»»´íÎó-----"+dateString);
+				log.error("--------æ—¶é—´æ ¼å¼è½¬æ¢é”™è¯¯-----"+dateString);
 			}
 		}
 		else {
 			return null;
 		}
-		
+
 		return date;
 	}
 	/**
@@ -64,7 +64,7 @@ public class DateUtil {
 	public static String convertDateToShortString(Date date){
 		return  convertDateToString(date,"yyyyMMdd");
 	}
-	
+
 	/**
 	 * yyyyMMddHHmmssSSS
 	 * @param date
@@ -73,7 +73,7 @@ public class DateUtil {
 	public static String convertDateToLongString(Date date){
 		return  convertDateToString(date,"yyyyMMddHHmmss");
 	}
-	
+
 	/**
 	 * yyyyMMdd
 	 * @param dateString
@@ -99,56 +99,56 @@ public class DateUtil {
 		return convertStringToDate(dateString,"yyyyMMddHHmmss");
 	}
 
-    /**
-     * xietieyun
-     * ½«µ±Ç°ÈÕÆÚ×ª»»³Émysql¶ÔÓ¦ÈÕÆÚ¸ñÊ½
-     * @param date
-     * @return
-     */
-    public static String convertDateToMysqlString(Date date) {
-        return convertDateToString(date , "yyyy-MM-dd HH:mm:ss");
-    }
+	/**
+	 * xietieyun
+	 * å°†å½“å‰æ—¥æœŸè½¬æ¢æˆmysqlå¯¹åº”æ—¥æœŸæ ¼å¼
+	 * @param date
+	 * @return
+	 */
+	public static String convertDateToMysqlString(Date date) {
+		return convertDateToString(date , "yyyy-MM-dd HH:mm:ss");
+	}
 
-    /**
-     * xietieyun
-     * ½«mysqlÖĞÈÕÆÚ×Ö·û´®×ª»¯³É¶ÔÓ¦µÄÈÕÆÚ
-     * @param dateString
-     * @return
-     */
-    public static Date convertMysqlDateStringToDate(String dateString){
+	/**
+	 * xietieyun
+	 * å°†mysqlä¸­æ—¥æœŸå­—ç¬¦ä¸²è½¬åŒ–æˆå¯¹åº”çš„æ—¥æœŸ
+	 * @param dateString
+	 * @return
+	 */
+	public static Date convertMysqlDateStringToDate(String dateString){
 		return convertStringToDate(dateString,"yyyy-MM-dd HH:mm:ss");
 	}
 
-    private static String getDateStr(long millis) throws Exception{
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(new Date(millis));
-    }
+	private static String getDateStr(long millis) throws Exception{
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(new Date(millis));
+	}
 
-    /**
-     * ½«×Ö·û´®ÈÕÆÚ×ª»»³ÉÁíÒ»ÖÖ×Ö·û´®¸ñÊ½
-     * @param dateStr
-     * @param formatStr1
-     * @param formatStr2
-     * @return
-     */
-    public static String formatDateString(String dateStr, String formatStr1, String formatStr2) {
-        SimpleDateFormat format1 = new SimpleDateFormat(formatStr1);
-        try {
-            Date date = format1.parse(dateStr);
-            SimpleDateFormat format2 = new SimpleDateFormat(formatStr2);
-            return format2.format(date);
-        } catch (ParseException e) {
-            log.error("ÈÕÆÚ×Ö·û´®¸ñÊ½»¯Òì³££¬dateStr=" + dateStr);
-        }
-        return null;    
-    }
+	/**
+	 * å°†å­—ç¬¦ä¸²æ—¥æœŸè½¬æ¢æˆå¦ä¸€ç§å­—ç¬¦ä¸²æ ¼å¼
+	 * @param dateStr
+	 * @param formatStr1
+	 * @param formatStr2
+	 * @return
+	 */
+	public static String formatDateString(String dateStr, String formatStr1, String formatStr2) {
+		SimpleDateFormat format1 = new SimpleDateFormat(formatStr1);
+		try {
+			Date date = format1.parse(dateStr);
+			SimpleDateFormat format2 = new SimpleDateFormat(formatStr2);
+			return format2.format(date);
+		} catch (ParseException e) {
+			log.error("æ—¥æœŸå­—ç¬¦ä¸²æ ¼å¼åŒ–å¼‚å¸¸ï¼ŒdateStr=" + dateStr);
+		}
+		return null;
+	}
 
-    public static void main(String[] args) throws Exception{
+	public static void main(String[] args) throws Exception{
 //        String datestr = getDateStr(System.currentTimeMillis());
-        System.out.println(convertDateToString(new Date(System.currentTimeMillis()), "yyyy-MM-dd HH:mm:ss"));
+		System.out.println(convertDateToString(new Date(System.currentTimeMillis()), "yyyy-MM-dd HH:mm:ss"));
 
 
-    }
+	}
 
 
 }

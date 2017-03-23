@@ -11,38 +11,38 @@ import java.util.Map;
 import java.util.concurrent.RejectedExecutionHandler;
 
 /**
- * ¼à¿ØÒµÎñÏß³Ì³ØÔËĞĞÇé¿ö
+ * ç›‘æ§ä¸šåŠ¡çº¿ç¨‹æ± è¿è¡Œæƒ…å†µ
  * @author yfguopeng
  * @Date 2013-02-28
  */
 public class MonitorThread implements Runnable {
 	private final static Log log = LogFactory.getLog(MonitorThread.class);
 	private final ThreadGroup group;
-	
+
 	public MonitorThread(ThreadGroup group) {
 		this.group = group;
 	}
-	
+
 	public void run() {
 		Map<String, ThreadPoolExecutor> workers =  ThreadGroupFactory.getThreadWorkers();
 		Iterator<String> iterator = workers.keySet().iterator();
-		
+
 		log.info("total threadpools:[ "+workers.size()+" ],total threads:[ "+group.activeCount()+" ]");
 		while(iterator.hasNext()) {
 			ThreadPoolExecutor worker = ThreadGroupFactory.getThreadWorker(iterator.next());
-			
+
 			RejectedExecutionHandler handler = worker.getRejectedExecutionHandler();
 			String rejectedSize = "";
 			if (RejectedPolicyHandlerInteface.class.isAssignableFrom(handler.getClass())) {
 				rejectedSize = " ],rejected threads:[ "+((RejectedPolicyHandlerInteface) handler).getRejectedSize();
 			}
-			
+
 			log.info("business name:[ "+worker.getBizName()+" ],core threads:[ "+worker.getCorePoolSize()+" ],max threads:[ "+worker.getMaximumPoolSize()+" ],queue capacitys:[ "+worker.getQueue().size()+" ],running threads:[ "+worker.getActiveCount()+rejectedSize+" ],  largest threads:[ "+worker.getLargestPoolSize()+" ],complete threads:[ "+worker.getCompletedTaskCount()+" ]");
-			
+
 			double per = (double)worker.getLargestPoolSize()/worker.getMaximumPoolSize();
-			if (Double.compare(per, 0.80) > 0) {//µ±ÊĞÓ¯ÂÊ³¬¹ı80%£¬±¨¾¯
+			if (Double.compare(per, 0.80) > 0) {//å½“å¸‚ç›ˆç‡è¶…è¿‡80%ï¼ŒæŠ¥è­¦
 				DecimalFormat nf = new DecimalFormat("0.00");
-//				Profiler.businessAlarm(worker.getBizName()+"_thread_largest",(new Date()).getTime(),"Ïß³Ì³Ø×î´óÈİÁ¿ÒÑ´ïµ½80%, °Ù·Ö±È = "+nf.format(per));
+//				Profiler.businessAlarm(worker.getBizName()+"_thread_largest",(new Date()).getTime(),"çº¿ç¨‹æ± æœ€å¤§å®¹é‡å·²è¾¾åˆ°80%, ç™¾åˆ†æ¯” = "+nf.format(per));
 			}
 		}
 	}

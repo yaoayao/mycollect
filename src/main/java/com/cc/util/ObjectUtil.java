@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- * ¶ÔÏó°ïÖúÀà
+ * å¯¹è±¡å¸®åŠ©ç±»
  *
  * @author lizhenzong
  * @version 1.0
@@ -24,7 +24,7 @@ public class ObjectUtil {
     private static Log log = LogFactory.getLog(ObjectUtil.class);
 
     /**
-     * ¸´ÖÆ¶ÔÏó
+     * å¤åˆ¶å¯¹è±¡
      */
     public static Object cloneObject(Object obj) {
         Object newObj = null;
@@ -39,13 +39,13 @@ public class ObjectUtil {
             newObj = in.readObject();
             in.close();
         } catch (Exception e) {
-            log.info("Éî¶È¸´ÖÆ³öÏÖÒì³£..." + e.getMessage(), e);
+            log.info("æ·±åº¦å¤åˆ¶å‡ºç°å¼‚å¸¸..." + e.getMessage(), e);
         }
         return newObj;
     }
 
     /**
-     * ½«Object×ª»»³ÉMap<String,Object>
+     * å°†Objectè½¬æ¢æˆMap<String,Object>
      */
     public static Map<String, Object> converObjectToMap(Object obj) throws Exception {
         Map<String, Object> bizMap = new HashMap<String, Object>();
@@ -55,7 +55,7 @@ public class ObjectUtil {
     }
 
     /**
-     * ½«Object×ª»»³ÉMap<String,Object>
+     * å°†Objectè½¬æ¢æˆMap<String,Object>
      */
     public static Map<String, Object> converObjectToTreeMap(Object obj) throws Exception {
         Map<String, Object> bizMap = new TreeMap<String, Object>();
@@ -65,14 +65,14 @@ public class ObjectUtil {
     }
 
     /**
-     * ½«Map<Object,Object>×ª³ÉObject
+     * å°†Map<Object,Object>è½¬æˆObject
      */
     public static Object converMapToObject(Map<Object, Object> map, Class c) {
         Object obj = null;
         try {
             if (map != null) {
                 obj = c.newInstance();
-                // ¹¹½¨×ÓÀàµÄÊôĞÔ
+                // æ„å»ºå­ç±»çš„å±æ€§
                 buildObjFromMap(map, c, obj);
             }
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class ObjectUtil {
     }
 
     /**
-     * Object×ª»»³É¼¯ºÏ
+     * Objectè½¬æ¢æˆé›†åˆ
      */
     private static void buildMapFromObj(Map<String, Object> bizMap, Object obj, Class c) {
         try {
@@ -102,7 +102,7 @@ public class ObjectUtil {
                     }
                 }
             }
-            // Èç¹ûÓĞ¸¸Àà£¬²ÉÓÃµİ¹é£¬»ñÈ¡¸¸ÀàµÄÊôĞÔ
+            // å¦‚æœæœ‰çˆ¶ç±»ï¼Œé‡‡ç”¨é€’å½’ï¼Œè·å–çˆ¶ç±»çš„å±æ€§
             if (c.getGenericSuperclass() != null) {
                 Class superClass = c.getSuperclass();
                 buildMapFromObj(bizMap, obj, superClass);
@@ -113,7 +113,7 @@ public class ObjectUtil {
     }
 
     /**
-     * ¼¯ºÏ×ª»»³ÉObject
+     * é›†åˆè½¬æ¢æˆObject
      */
     private static void buildObjFromMap(Map<Object, Object> map, Class c, Object obj) {
         try {
@@ -130,7 +130,7 @@ public class ObjectUtil {
                     }
                 }
             }
-            // Èç¹ûÓĞ¸¸Àà£¬²ÉÓÃµİ¹é£¬»ñÈ¡¸¸ÀàµÄÊôĞÔ
+            // å¦‚æœæœ‰çˆ¶ç±»ï¼Œé‡‡ç”¨é€’å½’ï¼Œè·å–çˆ¶ç±»çš„å±æ€§
             if (c.getGenericSuperclass() != null) {
                 Class superClass = c.getSuperclass();
                 buildObjFromMap(map, superClass, obj);

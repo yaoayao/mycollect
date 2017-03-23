@@ -16,42 +16,42 @@ import java.security.acl.Group;
 
 
 public class JacksonJsonUtil {
-    private static final Log log = LogFactory.getLog(JacksonJsonUtil.class);
+	private static final Log log = LogFactory.getLog(JacksonJsonUtil.class);
 
 
 	private static ObjectMapper mapper = new ObjectMapper();
 	static{
-		mapper.setSerializationInclusion(Include.NON_NULL);//ÉèÖÃĞòÁĞ»¯ÅäÖÃ£¬ÎªnullµÄÊôĞÔ²»¼ÓÈëµ½jsonÖĞ
-		mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);//¼æÈİµ¥ÒıºÅ µ«µ¥ÒıºÅ²»ÊôÓÚjson±ê×¼ ²»½¨ÒéÊ¹ÓÃ
+		mapper.setSerializationInclusion(Include.NON_NULL);//è®¾ç½®åºåˆ—åŒ–é…ç½®ï¼Œä¸ºnullçš„å±æ€§ä¸åŠ å…¥åˆ°jsonä¸­
+		mapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);//å…¼å®¹å•å¼•å· ä½†å•å¼•å·ä¸å±äºjsonæ ‡å‡† ä¸å»ºè®®ä½¿ç”¨
 	}
 	/**
-	 * ½«¶ÔÏó×ª»»³Éjson×Ö·û´®,Èç¹û×ª»»Ê§°ÜÔò·µ»Ønull
+	 * å°†å¯¹è±¡è½¬æ¢æˆjsonå­—ç¬¦ä¸²,å¦‚æœè½¬æ¢å¤±è´¥åˆ™è¿”å›null
 	 * @author zhaoyunxiao
-	 * @param o ĞèÒª×ª»»ÎªjsonµÄ¶ÔÏó
-	 * @return String ×ª»»ºóµÄjson×Ö·û´®
+	 * @param o éœ€è¦è½¬æ¢ä¸ºjsonçš„å¯¹è±¡
+	 * @return String è½¬æ¢åçš„jsonå­—ç¬¦ä¸²
 	 *
 	 *
 	 * */
-    public static String object2Json(Object o){
-    	String jsonStr = "";
-    	try {
-    		jsonStr = mapper.writeValueAsString(o);
+	public static String object2Json(Object o){
+		String jsonStr = "";
+		try {
+			jsonStr = mapper.writeValueAsString(o);
 		} catch (JsonProcessingException e) {
 			log.error("write2JsonStr() exception: " + e.getMessage());
 		}
 		return jsonStr;
-    }
+	}
 
-    /**
-     * ½«json×ª»»Îª¶ÔÏó Èç¹û¶ÔÏóÄ£°æÎªÄÚ²¿Àà»á³öÏÖÎÊÌâ£¬ËùÒÔ²»ÒªÊ¹ÓÃÄÚ²¿Àà
-     * @author zhaoyunxiao
-     * @param json Òª×ª»»µÄjson
-//     * @param ÒªÓ³ÉäµÄÀàĞÍ
-     * @return ×ª»»³ÉµÄÄ¿±ê¶ÔÏó£¬Èç¹û×ª»»Ê§°Ü·µ»Ønull
-     * */
-    public static Object json2Object(String json,Class<?> clazz){
-    	try {
-			 return mapper.readValue(json,clazz);
+	/**
+	 * å°†jsonè½¬æ¢ä¸ºå¯¹è±¡ å¦‚æœå¯¹è±¡æ¨¡ç‰ˆä¸ºå†…éƒ¨ç±»ä¼šå‡ºç°é—®é¢˜ï¼Œæ‰€ä»¥ä¸è¦ä½¿ç”¨å†…éƒ¨ç±»
+	 * @author zhaoyunxiao
+	 * @param json è¦è½¬æ¢çš„json
+	//     * @param è¦æ˜ å°„çš„ç±»å‹
+	 * @return è½¬æ¢æˆçš„ç›®æ ‡å¯¹è±¡ï¼Œå¦‚æœè½¬æ¢å¤±è´¥è¿”å›null
+	 * */
+	public static Object json2Object(String json,Class<?> clazz){
+		try {
+			return mapper.readValue(json,clazz);
 		} catch (JsonParseException e) {
 			log.error("json2Object() parseException: " + e.getMessage());
 		} catch (JsonMappingException e) {
@@ -59,27 +59,27 @@ public class JacksonJsonUtil {
 		} catch (IOException e) {
 			log.error("json2Object() IOException: " + e.getMessage());
 		}
-    	return null;
-    }
+		return null;
+	}
 
-    /**
-     * for example£º
-     * TypeReference type = new TypeReference<Map<String, Integer>>() {}
-     *
-     * @see com.fasterxml.jackson.core.type.TypeReference
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T fromJson(String jsonString, TypeReference<T> typeReference) {
-        if (org.apache.commons.lang3.StringUtils.isBlank(jsonString)) {
-            return null;
-        }
-        try {
-            return (T) mapper.readValue(jsonString, typeReference);
-        } catch (IOException e) {
-            log.error("parse json string error:" + jsonString, e);
-        }
-        return null;
-    }
+	/**
+	 * for exampleï¼š
+	 * TypeReference type = new TypeReference<Map<String, Integer>>() {}
+	 *
+	 * @see com.fasterxml.jackson.core.type.TypeReference
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T fromJson(String jsonString, TypeReference<T> typeReference) {
+		if (org.apache.commons.lang3.StringUtils.isBlank(jsonString)) {
+			return null;
+		}
+		try {
+			return (T) mapper.readValue(jsonString, typeReference);
+		} catch (IOException e) {
+			log.error("parse json string error:" + jsonString, e);
+		}
+		return null;
+	}
 
 
 

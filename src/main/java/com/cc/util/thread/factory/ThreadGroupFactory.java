@@ -6,7 +6,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.cc.util.thread.ThreadPoolExecutor;
 
 /**
- * 各个业务获取响应线程池
  * @author yfguopeng
  */
 public class ThreadGroupFactory {

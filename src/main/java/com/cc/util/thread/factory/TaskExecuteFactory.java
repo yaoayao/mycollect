@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Ïß³ÌÖ´ĞĞ¹¤³§Àà
+ * çº¿ç¨‹æ‰§è¡Œå·¥å‚ç±»
  * @author yfguopeng
  *
  * @param <T>
@@ -25,11 +25,11 @@ public class TaskExecuteFactory<T> {
 	private List<String> keys = new LinkedList<String>();
 	private boolean ignoreException;
 	private boolean isAsyn;
-	private long timeout = 5;//Ä¬ÈÏµ¥Î»Ãë
-	
+	private long timeout = 5;//é»˜è®¤å•ä½ç§’
+
 	/**
-	 * ÊÇ·ñºöÂÔÒì³£
-	 * Ä¬ÈÏÍ¬²½Ö´ĞĞ
+	 * æ˜¯å¦å¿½ç•¥å¼‚å¸¸
+	 * é»˜è®¤åŒæ­¥æ‰§è¡Œ
 	 */
 	@SuppressWarnings("rawtypes")
 	public static TaskExecuteFactory create(boolean ignore, boolean asyn, long timeout) {
@@ -40,26 +40,26 @@ public class TaskExecuteFactory<T> {
 		return factory;
 	}
 	/**
-	 * Ä¬ÈÏ ºöÂÔÒì³£
-	 * Ä¬ÈÏ Í¬²½Ö´ĞĞ
-	 * Ä¬ÈÏ ³¬Ê±Ê±¼ä5Ãë
+	 * é»˜è®¤ å¿½ç•¥å¼‚å¸¸
+	 * é»˜è®¤ åŒæ­¥æ‰§è¡Œ
+	 * é»˜è®¤ è¶…æ—¶æ—¶é—´5ç§’
 	 */
 	@SuppressWarnings("rawtypes")
 	public static TaskExecuteFactory create() {
 		return TaskExecuteFactory.create(true,false,5);
 	}
-	
+
 	/**
-	 * key ĞèÒªÒì²½Ö´ĞĞÈÎÎñÀàµÄ±êÊ¾£¬ºóĞøĞèÒªÓÃ´Ë±êÊ¾»ñÈ¡½á¹û¼¯
+	 * key éœ€è¦å¼‚æ­¥æ‰§è¡Œä»»åŠ¡ç±»çš„æ ‡ç¤ºï¼Œåç»­éœ€è¦ç”¨æ­¤æ ‡ç¤ºè·å–ç»“æœé›†
 	 */
 	public TaskExecuteFactory<T> registerTask(String key, TaskExecute<T> te){
 		tasks.put(key, te);
 		keys.add(key);
 		return this;
 	}
-	
+
 	/**
-	 * ×¢Òâ£¬ĞèÒªÒµÎñ×Ô¼º±£Ö¤³¬Ê±Ê±¼äÉèÖÃ
+	 * æ³¨æ„ï¼Œéœ€è¦ä¸šåŠ¡è‡ªå·±ä¿è¯è¶…æ—¶æ—¶é—´è®¾ç½®
 	 * @param bizName
 	 * @return
 	 * @throws Exception
@@ -67,19 +67,19 @@ public class TaskExecuteFactory<T> {
 	public Map<String, T> getResult(String bizName) throws Exception {
 		ThreadPoolExecutor executor = ThreadGroupFactory.getThreadWorker(bizName);
 		Map<String, T> resultMap = new HashMap<String, T>();
-		//Èç¹ûÏß³Ì³ØÃ»ÓĞ¹Ø±Õ£¬µ÷ÓÃÒì²½£¬·ñÔòµ÷ÓÃÍ¬²½½Ó¿ÚÊµÏÖ£¬±£Ö¤·şÎñ²»³öÏÖÎÊÌâ
+		//å¦‚æœçº¿ç¨‹æ± æ²¡æœ‰å…³é—­ï¼Œè°ƒç”¨å¼‚æ­¥ï¼Œå¦åˆ™è°ƒç”¨åŒæ­¥æ¥å£å®ç°ï¼Œä¿è¯æœåŠ¡ä¸å‡ºç°é—®é¢˜
 		if (isAsyn() && executor != null && !executor.isShutdown()) {
-			log.info("Òì²½Ö´ĞĞ >>>>>> "+bizName);
+			log.info("å¼‚æ­¥æ‰§è¡Œ >>>>>> "+bizName);
 			asynExecute(bizName,executor,resultMap);
 		} else {
-			log.info("Í¬²½Ö´ĞĞ >>>>>> "+bizName);
+			log.info("åŒæ­¥æ‰§è¡Œ >>>>>> "+bizName);
 			synExecute(bizName,resultMap);
 		}
 		return resultMap;
 	}
-	
+
 	/**
-	 * Í¬²½Ö´ĞĞ
+	 * åŒæ­¥æ‰§è¡Œ
 	 * @param resultMap
 	 * @throws Exception
 	 */
@@ -90,14 +90,14 @@ public class TaskExecuteFactory<T> {
 				T res = te.execute();
 				resultMap.put(key, res);
 			} catch(Exception e) {
-				log.error("Í¬²½Ö´ĞĞÒì³£ >>>>>> task = "+key, e);
+				log.error("åŒæ­¥æ‰§è¡Œå¼‚å¸¸ >>>>>> task = "+key, e);
 				if ( ! ignoreException ) throw e;
 			}
 		}
 	}
-	
+
 	/**
-	 * Òì²½Ö´ĞĞ
+	 * å¼‚æ­¥æ‰§è¡Œ
 	 * @param executor
 	 * @param resultMap
 	 * @throws Exception
@@ -112,24 +112,24 @@ public class TaskExecuteFactory<T> {
 				Future<T> f = executor.submit(te);
 				tempResult.put(key, f);
 			} catch(Exception e) {
-				log.error("Òì²½Ö´ĞĞÒì³£ >>>>>> task = "+key, e);
+				log.error("å¼‚æ­¥æ‰§è¡Œå¼‚å¸¸ >>>>>> task = "+key, e);
 				if ( ! ignoreException ) throw e;
 			}
 		}
 		try {
 			long time = getTimeout();
 			if (time == 0) time = 5;
-			log.info("Òì²½Ö´ĞĞµÈ´ı³¬Ê±Ê±¼ä >>>>>> timeout = "+time+" seconds");
+			log.info("å¼‚æ­¥æ‰§è¡Œç­‰å¾…è¶…æ—¶æ—¶é—´ >>>>>> timeout = "+time+" seconds");
 			latch.await(getTimeout(), TimeUnit.SECONDS);
 		} catch (Exception e) {
-			log.error("Òì²½Ö´ĞĞ³¬Ê± >>>>>> bizName = "+bizName, e);
+			log.error("å¼‚æ­¥æ‰§è¡Œè¶…æ—¶ >>>>>> bizName = "+bizName, e);
 			return;
 		}
 		for (String key : keys) {
 			try{
 				resultMap.put(key, tempResult.get(key).get(tasks.get(key).getTimeout(),TimeUnit.MILLISECONDS));
 			} catch(Exception e) {
-				log.error("Òì²½Ö´ĞĞÒì³£ >>>>>> task = "+key, e);
+				log.error("å¼‚æ­¥æ‰§è¡Œå¼‚å¸¸ >>>>>> task = "+key, e);
 				if ( ! ignoreException ) throw e;
 			}
 		}

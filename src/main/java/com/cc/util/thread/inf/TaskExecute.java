@@ -9,7 +9,6 @@ public abstract class TaskExecute<T> implements Callable<T>{
 	private CountDownLatch latch;
 	
 	/**
-	 * 线程超时时间，默认为3000ms
 	 */
 	private long timeout = 3000;
 	

@@ -5,8 +5,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
- *  Ïß³Ì¹¤³§£¬ ¼ÓÈëÁËÏß³ÌÃûµÄÒµÎñÃèÊö
- * 
+ *  çº¿ç¨‹å·¥å‚ï¼Œ åŠ å…¥äº†çº¿ç¨‹åçš„ä¸šåŠ¡æè¿°
+ *
  * @User: guopeng
  * @Date: 2013-02-28
  */

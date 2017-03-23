@@ -15,14 +15,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * ·¢ËÍhttpÇëÇóµÄ¹¤¾ßÀà
+ * å‘é€httpè¯·æ±‚çš„å·¥å…·ç±»
  * User: gaotianlin
  * Date: 2010-12-29
  * Time: 11:42:27
  */
 public class HttpClientUtil {
     private final static Log log = LogFactory.getLog(HttpClientUtil.class);
-    private static String key;  //¶©µ¥key
+    private static String key;  //è®¢å•key
     private static String timeout;
 
     public static final int MIN_ERROR_REQUEST_SPEND_TIME = 200;
@@ -32,7 +32,7 @@ public class HttpClientUtil {
     }
 
     /**
-     * ·¢ËÍ¶à²ÎÊıµÄpostÇëÇó
+     * å‘é€å¤šå‚æ•°çš„postè¯·æ±‚
      *
      * @param url
      * @param data
@@ -43,32 +43,32 @@ public class HttpClientUtil {
     }
 
     /**
-     * ·¢ËÍ¶à²ÎÊıµÄpostÇëÇó
+     * å‘é€å¤šå‚æ•°çš„postè¯·æ±‚
      *
      * @param url
      * @param data
      * @return
      */
     public static String sendHttpRequestByParams(String url, NameValuePair[] data, int timeoutTime) {
-        //¹¹ÔìHttpClientµÄÊµÀı
+        //æ„é€ HttpClientçš„å®ä¾‹
         HttpClient httpClient = new HttpClient();
         log.info(url);
         PostMethod getMethod = new PostMethod(url);
         getMethod.setRequestHeader("Connection", "close");
         getMethod.addParameters(data);
-        //Ê¹ÓÃÏµÍ³Ìá¹©µÄÄ¬ÈÏµÄ»Ö¸´²ßÂÔ
+        //ä½¿ç”¨ç³»ç»Ÿæä¾›çš„é»˜è®¤çš„æ¢å¤ç­–ç•¥
         getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
-        //¶¨ÒåÎåÃëÖÓµÄ³¬Ê±
+        //å®šä¹‰äº”ç§’é’Ÿçš„è¶…æ—¶
         httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(timeoutTime);
         httpClient.getHttpConnectionManager().getParams().setSoTimeout(timeoutTime);
         // getMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, 5000);
-        //¶¨ÒåÒ»¸öÊäÈëÁ÷
+        //å®šä¹‰ä¸€ä¸ªè¾“å…¥æµ
         InputStream ins = null;
-        //¶¨ÒåÎÄ¼şÁ÷
+        //å®šä¹‰æ–‡ä»¶æµ
         BufferedReader br = null;
         try {
 
-            //Ö´ĞĞgetMethod
+            //æ‰§è¡ŒgetMethod
             long timeBeforeExecute = System.currentTimeMillis();
             int statusCode = httpClient.executeMethod(getMethod);
             if (statusCode != HttpStatus.SC_OK) {
@@ -78,16 +78,16 @@ public class HttpClientUtil {
             long timeAfterExecute = System.currentTimeMillis();
             long executeSpendTime = timeAfterExecute - timeBeforeExecute;
             if (executeSpendTime > MIN_ERROR_REQUEST_SPEND_TIME) {
-               // log.error("ÇëÇóurl£º" + url+",params:"+toJson(data) + " »¨·ÑÁËÌ«³¤Ê±¼ä£º" + executeSpendTime + "ms!");
+                // log.error("è¯·æ±‚urlï¼š" + url+",params:"+toJson(data) + " èŠ±è´¹äº†å¤ªé•¿æ—¶é—´ï¼š" + executeSpendTime + "ms!");
             }
-            //Ê¹ÓÃgetResponseBodyAsStream¶ÁÈ¡Ò³ÃæÄÚÈİ£¬Õâ¸ö·½·¨¶ÔÓÚÄ¿±êµØÖ·ÖĞÓĞ´óÁ¿Êı¾İĞèÒª´«ÊäÊÇ×î¼ÑµÄ¡£
-            //   Thread.sleep(2000l);//²âÊÔĞèÒª£¬Ïß³ÌÔİÍ£10s
+            //ä½¿ç”¨getResponseBodyAsStreamè¯»å–é¡µé¢å†…å®¹ï¼Œè¿™ä¸ªæ–¹æ³•å¯¹äºç›®æ ‡åœ°å€ä¸­æœ‰å¤§é‡æ•°æ®éœ€è¦ä¼ è¾“æ˜¯æœ€ä½³çš„ã€‚
+            //   Thread.sleep(2000l);//æµ‹è¯•éœ€è¦ï¼Œçº¿ç¨‹æš‚åœ10s
             ins = getMethod.getResponseBodyAsStream();
             String charset = getMethod.getResponseCharSet();
             if (charset.toUpperCase().equals("ISO-8859-1")) {
                 charset = "utf-8";
             }
-            //°´·şÎñÆ÷±àÂë×Ö·û¼¯¹¹½¨ÎÄ¼şÁ÷£¬ÕâÀïµÄCHARSETÒª¸ù¾İÊµ¼ÊÇé¿öÉèÖÃ
+            //æŒ‰æœåŠ¡å™¨ç¼–ç å­—ç¬¦é›†æ„å»ºæ–‡ä»¶æµï¼Œè¿™é‡Œçš„CHARSETè¦æ ¹æ®å®é™…æƒ…å†µè®¾ç½®
             br = new BufferedReader(new InputStreamReader(ins, getMethod.getResponseCharSet()));
             StringBuffer sbf = new StringBuffer();
             String line = null;
@@ -97,17 +97,17 @@ public class HttpClientUtil {
             String result = new String(sbf.toString().getBytes(getMethod.getResponseCharSet()), charset);
             return result;
         } catch (HttpException e) {
-            //·¢ÉúÖÂÃüµÄÒì³££¬¿ÉÄÜÊÇĞ­Òé²»¶Ô»òÕß·µ»ØµÄÄÚÈİÓĞÎÊÌâ  \
-             log.error("ulr------"+url+toJson(data));
-            log.error("please check your http url address£¡", e);
+            //å‘ç”Ÿè‡´å‘½çš„å¼‚å¸¸ï¼Œå¯èƒ½æ˜¯åè®®ä¸å¯¹æˆ–è€…è¿”å›çš„å†…å®¹æœ‰é—®é¢˜  \
+            log.error("ulr------"+url+toJson(data));
+            log.error("please check your http url addressï¼", e);
         } catch (IOException e) {
-             log.error("ulr------"+url+toJson(data));
+            log.error("ulr------"+url+toJson(data));
             log.error("network exception is happening", e);
         } catch (Exception e) {
-             log.error("ulr------"+url+toJson(data));
+            log.error("ulr------"+url+toJson(data));
             log.error("Exception  is happening", e);
         } finally {
-            //¹Ø±ÕÁ÷£¬ÊÍ·ÅÁ¬½Ó
+            //å…³é—­æµï¼Œé‡Šæ”¾è¿æ¥
             try {
                 if (br != null) {
                     br.close();
@@ -120,15 +120,15 @@ public class HttpClientUtil {
                         getMethod.releaseConnection();
                         httpClient.getHttpConnectionManager().closeIdleConnections(0);
                     } catch (Exception e) {
-                         log.error("ulr------"+url+toJson(data));
+                        log.error("ulr------"+url+toJson(data));
                         log.error("close http connetion failure", e);
                     }
                 }
             } catch (IOException e) {
-                 log.error("ulr------"+url+toJson(data));
+                log.error("ulr------"+url+toJson(data));
                 log.error("stream connection close failure", e);
             } catch (Exception e) {
-                 log.error("ulr------"+url+toJson(data));
+                log.error("ulr------"+url+toJson(data));
                 log.error("Exception", e);
             }
         }
@@ -136,8 +136,8 @@ public class HttpClientUtil {
     }
 
     /**
-     * ¶©µ¥Í³Ò»ÇëÇó·½·¨
-     * Îğ¶¯£¡£¡£¡£¡£¡
+     * è®¢å•ç»Ÿä¸€è¯·æ±‚æ–¹æ³•
+     * å‹¿åŠ¨ï¼ï¼ï¼ï¼ï¼
      */
     public static String sendHttpRequest(String url, String param) {
         return sendHttpRequest(url, param, Integer.parseInt(timeout));
@@ -145,7 +145,7 @@ public class HttpClientUtil {
 
 
     public static String sendHttpRequest(String url, String param, int timeoutTime) {
-        //¹¹ÔìHttpClientµÄÊµÀı
+        //æ„é€ HttpClientçš„å®ä¾‹
         HttpClient httpClient = new HttpClient();
         log.info(url);
         PostMethod getMethod = new PostMethod(url);
@@ -167,20 +167,20 @@ public class HttpClientUtil {
             }
             getMethod.addParameter("key", keyValue);
         }
-        //Ê¹ÓÃÏµÍ³Ìá¹©µÄÄ¬ÈÏµÄ»Ö¸´²ßÂÔ
+        //ä½¿ç”¨ç³»ç»Ÿæä¾›çš„é»˜è®¤çš„æ¢å¤ç­–ç•¥
         getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
-        //¶¨ÒåÎåÃëÖÓµÄ³¬Ê±
+        //å®šä¹‰äº”ç§’é’Ÿçš„è¶…æ—¶
         httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(timeoutTime*5);
         httpClient.getHttpConnectionManager().getParams().setSoTimeout(timeoutTime*5);
         // getMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, 5000);
-        //¶¨ÒåÒ»¸öÊäÈëÁ÷
+        //å®šä¹‰ä¸€ä¸ªè¾“å…¥æµ
         InputStream ins = null;
-        //¶¨ÒåÎÄ¼şÁ÷
+        //å®šä¹‰æ–‡ä»¶æµ
         BufferedReader br = null;
         try {
 
             long timeBeforeExecute = System.currentTimeMillis();
-            //Ö´ĞĞgetMethod
+            //æ‰§è¡ŒgetMethod
             int statusCode = httpClient.executeMethod(getMethod);
             if (statusCode != HttpStatus.SC_OK) {
                 log.error("method failure: " + getMethod.getStatusLine()+",url:-----------"+url+",params:"+param);
@@ -189,16 +189,16 @@ public class HttpClientUtil {
             long timeAfterExecute = System.currentTimeMillis();
             long executeSpendTime = timeAfterExecute - timeBeforeExecute;
             if (executeSpendTime > MIN_ERROR_REQUEST_SPEND_TIME) {
-               // log.error("ÇëÇóurl£º " + url+",params:" + param + " »¨·ÑÁËÌ«³¤Ê±¼ä£º" + executeSpendTime + "ms");
+                // log.error("è¯·æ±‚urlï¼š " + url+",params:" + param + " èŠ±è´¹äº†å¤ªé•¿æ—¶é—´ï¼š" + executeSpendTime + "ms");
             }
-            //Ê¹ÓÃgetResponseBodyAsStream¶ÁÈ¡Ò³ÃæÄÚÈİ£¬Õâ¸ö·½·¨¶ÔÓÚÄ¿±êµØÖ·ÖĞÓĞ´óÁ¿Êı¾İĞèÒª´«ÊäÊÇ×î¼ÑµÄ¡£
-            //   Thread.sleep(2000l);//²âÊÔĞèÒª£¬Ïß³ÌÔİÍ£10s
+            //ä½¿ç”¨getResponseBodyAsStreamè¯»å–é¡µé¢å†…å®¹ï¼Œè¿™ä¸ªæ–¹æ³•å¯¹äºç›®æ ‡åœ°å€ä¸­æœ‰å¤§é‡æ•°æ®éœ€è¦ä¼ è¾“æ˜¯æœ€ä½³çš„ã€‚
+            //   Thread.sleep(2000l);//æµ‹è¯•éœ€è¦ï¼Œçº¿ç¨‹æš‚åœ10s
             ins = getMethod.getResponseBodyAsStream();
             String charset = getMethod.getResponseCharSet();
             if (charset.toUpperCase().equals("ISO-8859-1")) {
                 charset = "utf-8";
             }
-            //°´·şÎñÆ÷±àÂë×Ö·û¼¯¹¹½¨ÎÄ¼şÁ÷£¬ÕâÀïµÄCHARSETÒª¸ù¾İÊµ¼ÊÇé¿öÉèÖÃ
+            //æŒ‰æœåŠ¡å™¨ç¼–ç å­—ç¬¦é›†æ„å»ºæ–‡ä»¶æµï¼Œè¿™é‡Œçš„CHARSETè¦æ ¹æ®å®é™…æƒ…å†µè®¾ç½®
             br = new BufferedReader(new InputStreamReader(ins, getMethod.getResponseCharSet()));
             StringBuffer sbf = new StringBuffer();
             String line = null;
@@ -208,17 +208,17 @@ public class HttpClientUtil {
             String result = new String(sbf.toString().getBytes(getMethod.getResponseCharSet()), charset);
             return result;
         } catch (HttpException e) {
-            //·¢ÉúÖÂÃüµÄÒì³££¬¿ÉÄÜÊÇĞ­Òé²»¶Ô»òÕß·µ»ØµÄÄÚÈİÓĞÎÊÌâ  \
+            //å‘ç”Ÿè‡´å‘½çš„å¼‚å¸¸ï¼Œå¯èƒ½æ˜¯åè®®ä¸å¯¹æˆ–è€…è¿”å›çš„å†…å®¹æœ‰é—®é¢˜  \
             log.error("ulr------"+url+param);
-            log.error("please check your http url address£¡", e);
+            log.error("please check your http url addressï¼", e);
         } catch (IOException e) {
-             log.error("ulr------"+url+param);
+            log.error("ulr------"+url+param);
             log.error("network exception is happening", e);
         } catch (Exception e) {
-             log.error("ulr------"+url+param);
+            log.error("ulr------"+url+param);
             log.error("Exception  is happening", e);
         } finally {
-            //¹Ø±ÕÁ÷£¬ÊÍ·ÅÁ¬½Ó
+            //å…³é—­æµï¼Œé‡Šæ”¾è¿æ¥
             try {
                 if (br != null) {
                     br.close();
@@ -246,10 +246,10 @@ public class HttpClientUtil {
         return null;
     }
 
-     /**
-     * ½«NameValuePairÊı×é×ª»»Îªjson¸ñÊ½
+    /**
+     * å°†NameValuePairæ•°ç»„è½¬æ¢ä¸ºjsonæ ¼å¼
      *
-     * @param data NameValuePair Êı×é
+     * @param data NameValuePair æ•°ç»„
      * @return
      */
     private static String toJson(NameValuePair[] data) {
@@ -273,15 +273,15 @@ public class HttpClientUtil {
     public  void setTimeout(String timeout) {
         HttpClientUtil.timeout = timeout;
     }
-    /*************************************   ¿ì½İÖ§¸¶  ************************************************//*
+    /*************************************   å¿«æ·æ”¯ä»˜  ************************************************//*
     *//**
-     * £¨copy×Ôm-common 2012-05-21 ¹ùÅô£©
-     * ¶©µ¥Í³Ò»ÇëÇó·½·¨
-     * Îğ¶¯£¡£¡£¡£¡£¡
+     * ï¼ˆcopyè‡ªm-common 2012-05-21 éƒ­é¹ï¼‰
+     * è®¢å•ç»Ÿä¸€è¯·æ±‚æ–¹æ³•
+     * å‹¿åŠ¨ï¼ï¼ï¼ï¼ï¼
      *//*
     public static String sendHttpRequest(HttpEntity entity) {
     	String url = entity.getUrl();
-        //¹¹ÔìHttpClientµÄÊµÀı
+        //æ„é€ HttpClientçš„å®ä¾‹
         HttpClient httpClient = new HttpClient();
         log.info(url);
         PostMethod getMethod = new PostMethod(entity.getUrl());
@@ -290,7 +290,7 @@ public class HttpClientUtil {
             getMethod.addParameters(entity.getPost());
         }
 
-        //Ê¹ÓÃÏµÍ³Ìá¹©µÄÄ¬ÈÏµÄ»Ö¸´²ßÂÔ
+        //ä½¿ç”¨ç³»ç»Ÿæä¾›çš„é»˜è®¤çš„æ¢å¤ç­–ç•¥
         getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
 
         if(entity.getCookies()!=null){
@@ -303,31 +303,31 @@ public class HttpClientUtil {
         	entity.setEncoding("UTF-8");
         }
         getMethod.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, entity.getEncoding());
-        //¶¨ÒåÎåÃëÖÓµÄ³¬Ê±
+        //å®šä¹‰äº”ç§’é’Ÿçš„è¶…æ—¶
         httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(1000*30);
         httpClient.getHttpConnectionManager().getParams().setSoTimeout(1000*30);
-        //¶¨ÒåÒ»¸öÊäÈëÁ÷
+        //å®šä¹‰ä¸€ä¸ªè¾“å…¥æµ
         InputStream ins = null;
-        //¶¨ÒåÎÄ¼şÁ÷
+        //å®šä¹‰æ–‡ä»¶æµ
         BufferedReader br = null;
         try {
 
-            //Ö´ĞĞgetMethod
+            //æ‰§è¡ŒgetMethod
             int statusCode = httpClient.executeMethod(getMethod);
             if (statusCode != HttpStatus.SC_OK) {
                 log.error("method failure: " + getMethod.getStatusLine());
             }
             String result =getMethod.getResponseBodyAsString();
 
-            //ÉèÖÃ·µ»ØÖµÒÔ¼°cookie
+            //è®¾ç½®è¿”å›å€¼ä»¥åŠcookie
             entity.setResponseText(result);
             String cookies = updateCookie(getMethod);
             entity.setCookies(cookies);
             return result;
         }
         catch (HttpException e) {
-            //·¢ÉúÖÂÃüµÄÒì³££¬¿ÉÄÜÊÇĞ­Òé²»¶Ô»òÕß·µ»ØµÄÄÚÈİÓĞÎÊÌâ  \
-            log.error("please check your http url address£¡" , e);
+            //å‘ç”Ÿè‡´å‘½çš„å¼‚å¸¸ï¼Œå¯èƒ½æ˜¯åè®®ä¸å¯¹æˆ–è€…è¿”å›çš„å†…å®¹æœ‰é—®é¢˜  \
+            log.error("please check your http url addressï¼" , e);
         }
         catch (IOException e) {
             log.error("network exception is happening" , e);
@@ -336,7 +336,7 @@ public class HttpClientUtil {
             log.error("Exception  is happening" , e);
         }
         finally {
-            //¹Ø±ÕÁ÷£¬ÊÍ·ÅÁ¬½Ó
+            //å…³é—­æµï¼Œé‡Šæ”¾è¿æ¥
             try {
                 if (br != null) {
                     br.close();
@@ -366,16 +366,16 @@ public class HttpClientUtil {
         return null;
     }*/
 
-	private static String updateCookie(PostMethod getMethod) {
-		String cookies=null;
-		NameValuePair cookieHeader = getMethod.getResponseHeader("Set-Cookie");
+    private static String updateCookie(PostMethod getMethod) {
+        String cookies=null;
+        NameValuePair cookieHeader = getMethod.getResponseHeader("Set-Cookie");
         if(cookieHeader!=null){
             cookies = cookieHeader.getValue();
             if(cookies!=null){
                 cookies = cookies.substring(0, cookies.indexOf(";"));
             }
         }
-		return cookies;
-	}
+        return cookies;
+    }
 }
 
