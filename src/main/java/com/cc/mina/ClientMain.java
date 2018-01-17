@@ -17,9 +17,9 @@ import java.net.SocketAddress;
 public class ClientMain {
     public static void main(String[] args)
     {
-        SocketAddress address = new InetSocketAddress("localhost",4321);
+        SocketAddress address = new InetSocketAddress("47.95.64.117",3080);
         IoConnector connector = new NioSocketConnector();
-        connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new ObjectSerializationCodecFactory()));
+        connector.getFilterChain().addLast("codec", new ProtocolCodecFilter(new DeviceProtocolCodecFactory()));
         connector.getFilterChain().addLast("logger", new LoggingFilter());
         connector.setHandler(new ClientHandler());
         //连接到服务器

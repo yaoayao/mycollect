@@ -2,6 +2,7 @@ package com.cc;
 
 import com.cc.po.User;
 import com.cc.util.SerializeUtil;
+import com.cc.util.StringTools;
 import com.cc.util.UnicodeUtil;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -12,6 +13,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Main {
     public static void main(String[] args) throws Exception {
 
+        String messageStr = "0003043818483635303637303236313635363733343630303431313038353036313538";
+        byte[] bytes = StringTools.hexString2Byte(messageStr);
+        byte[] ver = new byte[4];
+        byte[] deviceType = new byte[1];
+        byte[] imei = new byte[15];
+        byte[] imsi = new byte[15];
+
+        System.arraycopy(bytes, 0, ver, 0, 4);
+        System.arraycopy(bytes, 4, deviceType, 0, 1);
+        System.arraycopy(bytes, 5, imei, 0, 15);
+        System.arraycopy(bytes, 20, imsi, 0, 15);
+        System.out.println(new String(imei));
         //Dozer对象拷贝实例
         /*User user = new User();
         user.setUserId(111);
