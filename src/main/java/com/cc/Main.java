@@ -13,18 +13,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Main {
     public static void main(String[] args) throws Exception {
 
-        String messageStr = "0003043818483635303637303236313635363733343630303431313038353036313538";
-        byte[] bytes = StringTools.hexString2Byte(messageStr);
-        byte[] ver = new byte[4];
-        byte[] deviceType = new byte[1];
-        byte[] imei = new byte[15];
-        byte[] imsi = new byte[15];
-
-        System.arraycopy(bytes, 0, ver, 0, 4);
-        System.arraycopy(bytes, 4, deviceType, 0, 1);
-        System.arraycopy(bytes, 5, imei, 0, 15);
-        System.arraycopy(bytes, 20, imsi, 0, 15);
-        System.out.println(new String(imei));
+//        String messageStr = "0003043818483635303637303236313635363733343630303431313038353036313538";
+//        byte[] bytes = StringTools.hexString2Byte(messageStr);
+//        byte[] ver = new byte[4];
+//        byte[] deviceType = new byte[1];
+//        byte[] imei = new byte[15];
+//        byte[] imsi = new byte[15];
+//
+//        System.arraycopy(bytes, 0, ver, 0, 4);
+//        System.arraycopy(bytes, 4, deviceType, 0, 1);
+//        System.arraycopy(bytes, 5, imei, 0, 15);
+//        System.arraycopy(bytes, 20, imsi, 0, 15);
+//        System.out.println(new String(imei));
         //Dozer对象拷贝实例
         /*User user = new User();
         user.setUserId(111);
@@ -89,7 +89,6 @@ public class Main {
     }*/
 
 
-
 //            int number = -10;
 //            //原始数二进制
 //            printInfo(number);
@@ -128,16 +127,31 @@ public class Main {
         p.getUser().setUserName("2222");
         System.out.println(p.getName());
         System.out.println(p1.getName());*/
-        AtomicInteger ai = new AtomicInteger();
-        System.out.println(ai);
-        System.out.println(ai.getAndIncrement());
-        System.out.println(ai);
-
-//        System.out.println(JacksonJsonUtil.object2Json(p));
-
+//        AtomicInteger ai = new AtomicInteger();
+//        System.out.println(ai);
+//        System.out.println(ai.getAndIncrement());
+//        System.out.println(ai);
+//
+////        System.out.println(JacksonJsonUtil.object2Json(p));
+//        String str1 = new StringBuilder("计算机").append("软件").toString();
+//        System.out.println(str1.intern() == str1);
+//        String str2 = new StringBuilder("ja").append("va").toString();
+//        System.out.println(str2.intern() == str2);
+        for(int i = 0 ;i < 20 ;i ++) {
+            Thread thread = new Thread(() -> {
+                System.out.println("新线程开始");
+                try {
+                    Thread.sleep(1000 * 200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("线程结束");
+            });
+            thread.setName("myThread" + i);
+            thread.start();
+        }
 
     }
-
 
 //    private static void printInfo(int num){
 //        System.out.println(Integer.toBinaryString(num));
