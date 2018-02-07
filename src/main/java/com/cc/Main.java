@@ -137,19 +137,19 @@ public class Main {
 //        System.out.println(str1.intern() == str1);
 //        String str2 = new StringBuilder("ja").append("va").toString();
 //        System.out.println(str2.intern() == str2);
-        for(int i = 0 ;i < 20 ;i ++) {
-            Thread thread = new Thread(() -> {
-                System.out.println("新线程开始");
-                try {
-                    Thread.sleep(1000 * 200);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("线程结束");
-            });
-            thread.setName("myThread" + i);
-            thread.start();
-        }
+//        for(int i = 0 ;i < 20 ;i ++) {
+//            Thread thread = new Thread(() -> {
+//                System.out.println("新线程开始");
+//                try {
+//                    Thread.sleep(1000 * 200);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+//                System.out.println("线程结束");
+//            });
+//            thread.setName("myThread" + i);
+//            thread.start();
+//        }
 
     }
 
