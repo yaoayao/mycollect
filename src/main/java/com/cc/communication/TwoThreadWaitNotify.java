@@ -1,5 +1,8 @@
 package com.cc.communication;
 
+/**
+ * 循环打印奇数偶数
+ */
 public class TwoThreadWaitNotify {
     private int start = 1;
     private boolean flag = false;
