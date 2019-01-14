@@ -81,43 +81,14 @@ public class Palindromic5 {
     }
 
     /**
-     * 中心点扩展
+     * Manacher 算法（待完善）
      *
      * @param s
      * @return
      */
     public static String longestPalindrome2(String s) {
-        int max = 1, start = 0, end = 1;
-        if (s.length() == 0) return "";
-        for (int i = 0; i < s.length(); i++) {
-            //单个元素初始化
-            for (int j = 0; j <= i && j < s.length() - i; j++) {
-                if (s.charAt(j + i) == s.charAt(i - j)) {
-                    if (max < 2*j+1) {
-                        max = 2*j+1;
-                        start = i - j ;
-                        end = j + i+1;
-                    }
-                }else {
-                    break;
-                }
-            }
-            //两个相同的元素初始化
-            for (int j = 0; j <= i && j < s.length() - i-1; j++) {
-                if (i + 1 < s.length()) {
-                    if (s.charAt(i - j) == s.charAt(i + 1 + j)) {
-                        if (max < 2*j+2) {
-                            max = 2*j+2;
-                            start = i - j ;
-                            end = j + i + 2;
-                        }
-                    }else {
-                        break;
-                    }
-                }
-            }
-        }
-        return s.substring(start,end );
+
+        return "";
     }
 
     public static void main(String[] args) {
