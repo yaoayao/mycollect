@@ -12,7 +12,7 @@ public class QuickSort {
     public static void quick(int[] nums, int start, int end) {
         if (start >= end) return;
 
-        int partition = partition(nums, start, end);
+        int partition = partition1(nums, start, end);
         quick(nums, start, partition - 1);
         quick(nums, partition + 1, end);
     }
@@ -42,6 +42,26 @@ public class QuickSort {
         nums[i] = nums[target];
         nums[target] = num;
         return i;
+    }
+
+    /**
+     * 求中间位置
+     *
+     * @param nums
+     * @param start
+     * @param end
+     * @return
+     */
+    public static int partition1(int[] nums, int start, int end) {
+        int target = nums[end];
+        while (start < end) {
+            while (start < end && nums[start] <= target) start ++;
+            nums[end] = nums[start];
+            while ((start < end && nums[end] >= target)) end -- ;
+            nums[start] = nums[end];
+        }
+        nums[end] = target;
+        return end;
     }
 
     public static void main(String[] args) {
