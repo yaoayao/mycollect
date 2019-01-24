@@ -11,17 +11,10 @@ public class QuickSort {
 
     public static void quick(int[] nums, int start, int end) {
         if (start >= end) return;
-        int mid = end;
-        for (; start < end; start++) {
-            if (mid > start && nums[start] > nums[mid] || (mid < start && nums[start] < nums[mid])) {
-                int num = nums[start];
-                nums[start] = nums[mid];
-                nums[mid] = num;
-                mid = start;
-            }
-        }
-        quick(nums, start, mid - 1);
-        quick(nums, mid + 1, end);
+
+        int partition = partition(nums, start, end);
+        quick(nums, start, partition - 1);
+        quick(nums, partition + 1, end);
     }
 
     /**
@@ -36,7 +29,7 @@ public class QuickSort {
         int target = end;
         int i = start;
         for (int j = start; j < end; j++) {
-            if (nums[i] < nums[target]) {
+            if (nums[j] < nums[target]) {
                 if (i != j) {
                     int num = nums[i];
                     nums[i] = nums[j];
@@ -52,7 +45,7 @@ public class QuickSort {
     }
 
     public static void main(String[] args) {
-        int[] nums = {1, 2, 3, 4, 3, 2, 45, 3, 4, 6, 8, 9, 34, 2};
+        int[] nums = {-1, 0, 1, 2, -1, -4};
         int[] sort = sort(nums);
         System.out.println("");
     }
