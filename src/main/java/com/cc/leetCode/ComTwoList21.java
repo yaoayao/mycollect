@@ -32,7 +32,7 @@ public class ComTwoList21 {
         }
         if (l1 != null) {
             result.next = l1;
-        } else if (l2 != null) {
+        } else  {
             result.next = l2;
         }
         return resultHead;
